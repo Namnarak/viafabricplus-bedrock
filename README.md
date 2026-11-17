@@ -1,36 +1,32 @@
-# ViaFabricPlus Bedrock
+# ViaFabricPlus Bedrock — Legacy compatibility track
 
-Addon for [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus) that adds Minecraft: Bedrock Edition support.
+This branch exists to document compatibility with the `ViaFabricPlus Legacy` branch for Minecraft 1.21.11.
 
-## Usage
+## Important: no separate addon JAR is required for 1.21.11
 
-1. Install [ViaFabricPlus](https://modrinth.com/mod/viafabricplus) 5.1.0 or newer and this addon.
-2. Select the Bedrock version in the ViaFabricPlus screen.
-3. Optionally, log in under `Settings > Bedrock > Account for Bedrock Edition`. This is needed for online mode servers,
-   `Bedrock Realms` and `Bedrock Friends`.
+Upstream ViaFabricPlus 4.4.15 already includes its Bedrock Edition integration (ViaBedrock, Bedrock connection pipeline, settings and Realms support) in the main mod. The legacy build keeps that integrated implementation.
 
-## Addresses
+For Minecraft 1.21.11:
 
-| Address                                | Signaling                     |
-|----------------------------------------|-------------------------------|
-| `host[:port]`                          | HTTP, default port 19132      |
-| `nethernet-lan://host[:port]`          | LAN, default port 7551        |
-| `nethernet-xbox://network-id`          | Xbox WebSocket, needs account |
-| `nethernet-xbox-json-rpc://network-id` | Xbox JSON-RPC, needs account  |
+1. Install [ViaFabricPlus Legacy](https://github.com/Namnarak/ViaFabricPlus/tree/legacy/1.21.11-26.3).
+2. Do **not** install this repository as a second mod. The newer standalone addon is not binary-compatible with ViaFabricPlus 4.4.15.
+3. Use the Bedrock protocol selection built into ViaFabricPlus Legacy.
 
-## Gradle
+## Why this branch does not publish an addon
 
-```kotlin
-repositories {
-    maven("https://repo.viaversion.com")
-}
+The current standalone addon targets:
+- ViaFabricPlus 5.1.3 or newer
+- Minecraft 26.3
+- Java 25+
 
-dependencies {
-    runtimeOnly("com.viaversion:viafabricplus-bedrock:x.x.x") // Replace with the latest release
-}
-```
+Its entrypoint and API calls target the newer ViaFabricPlus addon API. The 1.21.11 / 4.4.15 line uses a different integration API and already bundles Bedrock support. Reusing the current JAR on that branch would be an invalid compatibility claim.
 
-## Contact
+## Compatibility matrix
 
-- Issues: https://github.com/ViaVersionAddons/viafabricplus-bedrock/issues
-- Discord: https://florianreuth.de/discord
+| Host mod line | Minecraft client | Bedrock implementation | Separate addon |
+|---|---:|---|---|
+| ViaFabricPlus Legacy 4.4.15 | 1.21.11 | Bundled in ViaFabricPlus | No |
+| ViaFabricPlus 5.1.3+ | 26.3 | Standalone addon | Yes |
+
+The next step for a true standalone 1.21.11 addon would be a source-level port against the 4.4.15 addon entrypoint/API, followed by a dedicated build and runtime test. This branch intentionally does not ship a non-working JAR.
+
