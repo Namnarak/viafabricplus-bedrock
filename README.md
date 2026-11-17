@@ -4,13 +4,13 @@ This branch exists to document compatibility with the `ViaFabricPlus Legacy` bra
 
 ## Important: no separate addon JAR is required for 1.21.11
 
-Upstream ViaFabricPlus 4.4.15 already includes its Bedrock Edition integration (ViaBedrock, Bedrock connection pipeline, settings and Realms support) in the main mod. The legacy build keeps that integrated implementation.
+ViaFabricPlus Legacy keeps the Bedrock integration in its host mod and updates it to **ViaBedrock 0.0.32 / Bedrock 1.26.60**, with Cloudburst NetherNet transport. The implementation lives in the host fork's source tree so it can use the 1.21.11-specific connection hooks; this repository tracks the compatibility target and must not ship a duplicate addon JAR.
 
 For Minecraft 1.21.11:
 
 1. Install [ViaFabricPlus Legacy](https://github.com/Namnarak/ViaFabricPlus/tree/legacy/1.21.11-26.3).
 2. Do **not** install this repository as a second mod. The newer standalone addon is not binary-compatible with ViaFabricPlus 4.4.15.
-3. Use the Bedrock protocol selection built into ViaFabricPlus Legacy.
+3. Use the Bedrock protocol selection built into ViaFabricPlus Legacy. The current source/build is maintained on the [legacy/1.21.11-26.3 branch](https://github.com/Namnarak/ViaFabricPlus/tree/legacy/1.21.11-26.3).
 
 ## Why this branch does not publish an addon
 
@@ -25,8 +25,8 @@ Its entrypoint and API calls target the newer ViaFabricPlus addon API. The 1.21.
 
 | Host mod line | Minecraft client | Bedrock implementation | Separate addon |
 |---|---:|---|---|
-| ViaFabricPlus Legacy 4.4.15 | 1.21.11 | Bundled in ViaFabricPlus | No |
+| ViaFabricPlus Legacy 4.4.15 + ViaBedrock 0.0.32 | 1.21.11 | Bundled NetherNet integration (Bedrock 1.26.60) | No |
 | ViaFabricPlus 5.1.3+ | 26.3 | Standalone addon | Yes |
 
-The next step for a true standalone 1.21.11 addon would be a source-level port against the 4.4.15 addon entrypoint/API, followed by a dedicated build and runtime test. This branch intentionally does not ship a non-working JAR.
+This compatibility line intentionally does not publish a second mod JAR: the Bedrock integration is built into ViaFabricPlus Legacy and shares its 1.21.11 connection hooks.
 
